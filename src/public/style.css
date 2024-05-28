@@ -58,6 +58,18 @@ body > div {
     color: var(--text);
 }
 
+#pages-nav {
+
+}
+
+#pages-nav ul {
+list-style: none;
+}
+
+#pages-nav ul li {
+
+}
+
 /* END SIDE BAR */
 
 /* START NOTES CONTAINER */
@@ -117,3 +129,24 @@ body > div {
     display: none;
 }
 /* END THEME TOGGLE */
+
+/* START MODAL */
+    .modal{
+        position: fixed;
+        inset:0;
+        display: none;
+        place-content: center;
+        z-index: 10;
+        background: #3337;
+    }
+    .modal.show {
+        display: grid;
+    }
+    .modal .modal-inner{
+        background: var(--body);
+        border: var(--text);
+        color: var(--text);
+        z-index: 11;
+        padding: 1rem;
+    }
+/* END MODAL */

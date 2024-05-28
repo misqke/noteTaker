@@ -75,3 +75,4 @@ const theme = (() => {
     .forEach(btn => btn.addEventListener("click", handleFontSizeClick));
 
     /** END FONT SIZE CONTROL */ 
+

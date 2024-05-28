@@ -12,8 +12,10 @@
 </head>
 <body>
     <div id="sidebar-container">
-        
         <input id="search" type="text" />
+        <nav id="pages-nav">
+            <ul></ul>
+        </nav>
     </div>
     <div id="notes-container">
         <div id="controls-row">
@@ -30,9 +32,21 @@
             </button>
             <button data-font-size data-dir="-1">A-</button>
             <button data-font-size data-dir="1">A+</button>
+            <button id="new-page-modal-button">New</button>
         </div>
         <div id="notes-body"></div>
         <div id="notes-editor"></div>
+    </div>
+    <div id="new-page-modal" class="modal">
+        <div class="modal-inner">
+            <form id="new-page-form">
+                <label>Page Title:</label>
+                <input type="text" id="new-page-input" required minlength="3" />
+                <button type="submit" form="new-page-form" id="new-page-submit-button">Add</button>
+                <p id="new-page-form-error"></p>
+            </form>
+        </div>
+        
     </div>
 </body>
 </html>
