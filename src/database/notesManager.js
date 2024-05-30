@@ -15,6 +15,19 @@ const insertPage = (title) => {
     }
 }
 
+const deletePage = (pageId) => {
+    try {
+        console.log(pageId);
+        const deleteQuery = db.prepare("DELETE FROM Pages WHERE PageId = ?")
+        const info = deleteQuery.run(pageId);
+        if (info.changes == 1) return {success: true, msg: "Page deleted successfully!"}
+        else return {success: false, error: "Failed to delete page..."}
+    } catch (err) {
+        console.log(err);
+        return {success: false, error: "Failed to delete page..."}
+    }
+}
+
 const updatePage = (id, newTitle) => {
     try {
         const updateQuery = db.prepare("UPDATE Pages set Title = ? WHERE PageId = ?");
@@ -57,6 +70,7 @@ const getAllPAges = () => {
 
 module.exports = {
     insertPage,
+    deletePage,
     updatePage,
     getAllPAges
 }

@@ -1,4 +1,5 @@
 const { app, BrowserWindow } = require('electron/main');
+const notesManager = require("./database/notesManager");
 const path = require('node:path');
 
 const createWindow = () => {

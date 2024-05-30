@@ -33,10 +33,16 @@
             <button data-font-size data-dir="-1">A-</button>
             <button data-font-size data-dir="1">A+</button>
             <button id="new-page-modal-button">New</button>
+            <button id="delete-page-modal-button" disabled="true">D</button>
         </div>
-        <div id="notes-body"></div>
+        <div id="notes-container">
+            <h2 id="page-title">Select or create a page to continue.</h2>
+            <div id="notes-body"></div>
+        </div>
         <div id="notes-editor"></div>
     </div>
+
+    <!-- new page modal -->
     <div id="new-page-modal" class="modal">
         <div class="modal-inner">
             <form id="new-page-form">
@@ -46,7 +52,18 @@
                 <p id="new-page-form-error"></p>
             </form>
         </div>
-        
     </div>
+
+    <!-- delete page modal -->
+    <div id="delete-page-modal" class="modal">
+        <div class="modal-inner">
+            <div id="delete-page-form">
+                <p>Deleting this page will delete all related notes, are you sure you wish to delete?</p>
+                <button type="button" id="delete-page-submit-button">Delete</button>
+                <p id="delete-page-form-error"></p>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

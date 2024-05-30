@@ -7,6 +7,11 @@
     const newPageForm = document.getElementById("new-page-form");
     const newPageInput = document.querySelector("#new-page-form input");
     const newPageError = document.getElementById("new-page-form-error");
+    const deletePageModalBtn = document.getElementById("delete-page-modal-button");
+    const deletePageBtn = document.getElementById("delete-page-submit-button");
+    const deletePageModal = document.getElementById("delete-page-modal");
+    const notesBody = document.getElementById("notes-body");
+    const pageTitle = document.getElementById("page-title");
 
     /** END PAGE ELEMENTS */
 
@@ -15,6 +20,7 @@
     /** START STATE */
 
     let pages =  notesManager.getPages();
+    let currentPage = null;
 
     /** END STATE */
 
@@ -22,10 +28,37 @@
 
     /** START FUNCTIONS */
 
+    const setPage = (page) => {
+      pageTitle.innerText = page.Title;
+      currentPage = page;
+      deletePageModalBtn.disabled = false;
+    }
+
+    const clearNotesBody = () => {
+      pageTitle.innerText = "Select or create a page to continue."
+      notesBody.innerHTML = "";
+    }
+
+    const handleDeletePage = () => {
+      const response = notesManager.deletePage(currentPage.PageId);
+      if (response.success == true) {
+        deletePageModalBtn.disabled = true;
+        const navItem = document.getElementById(`page-nav-${currentPage.PageId}`);
+        navItem.remove();
+        currentPage = null;
+        clearNotesBody();
+        deletePageModal.classList.remove("show");
+      } else {
+        alert(response.error);
+      }
+    }
+
     const createNavItem = (page) => {
       const item = document.createElement("li");
       item.setAttribute("pageId", page.PageId);
+      item.id = `page-nav-${page.PageId}`
       item.innerText = page.Title;
+      item.onclick = () => setPage(page);
       pagesNav.append(item);
       return item;
     }
@@ -39,14 +72,15 @@
     }
 
     const handleNewPage = (title) => {
-        const newPage = notesManager.addPage(title);
-        if (newPage.success == true) {
-          pages.push(newPage.data);
-          createNavItem(newPage.data);
+        const response = notesManager.addPage(title);
+        if (response.success == true) {
+          pages.push(response.data);
+          createNavItem(response.data);
           handleModalError();
+          setPage(response.data);
           newPageModal.classList.remove("show");
         } else {
-          handleModalError(newPage.error);
+          handleModalError(response.error);
         }
       }
 
@@ -57,7 +91,6 @@
     /** START PAGES NAVIGATION */
     
     pages.forEach(page => {
-      console.log(page);
       const item = createNavItem(page);
     });
 
@@ -65,7 +98,7 @@
     
     /////////////////////////////////////////////////////////////////////////////////////////////////
     
-    /** START NEW PAGE BUTTON */
+    /** START MENU BUTTONs */
 
       newPageModalBtn.onclick = () => newPageModal.classList.add("show");
       newPageModal.onclick = (e) => {
@@ -80,7 +113,18 @@
         newPageForm.reset();
       }
 
-    /** END NEW PAGE BUTTON */
+      deletePageModalBtn.onclick = () => deletePageModal.classList.add("show");
+      deletePageModal.onclick = (e) => {
+        if (e.target.id == "delete-page-modal") {
+            deletePageModal.classList.remove("show");
+        }
+      }
+
+      deletePageBtn.onclick = () => {
+        handleDeletePage();
+      }
+
+    /** END MENU BUTTONs */
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////
