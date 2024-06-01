@@ -68,9 +68,21 @@ const getAllPAges = () => {
     }
 }
 
+const getPageNotes = (pageId) => {
+    try {
+        const getQuery = db.prepare("SELECT * FROM Notes WHERE PageId = ?");
+        const notes = getQuery.all(pageId);
+        return {success: true, data: notes};
+    } catch (err) {
+        console.log(err);
+        return {success: false, error: err};
+    }
+}
+
 module.exports = {
     insertPage,
     deletePage,
     updatePage,
-    getAllPAges
+    getAllPAges,
+    getPageNotes
 }

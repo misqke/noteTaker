@@ -5,4 +5,5 @@ contextBridge.exposeInMainWorld('notesManager', {
   addPage: (title) => notesManager.insertPage(title),
   deletePage: (pageId) => notesManager.deletePage(pageId),
   getPages: () => notesManager.getAllPAges(),
+  getPageNotes: (pageId) => notesManager.getPageNotes(pageId),
 })

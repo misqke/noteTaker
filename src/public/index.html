@@ -35,11 +35,17 @@
             <button id="new-page-modal-button">New</button>
             <button id="delete-page-modal-button" disabled="true">D</button>
         </div>
-        <div id="notes-container">
+        <div id="notes-body">
             <h2 id="page-title">Select or create a page to continue.</h2>
-            <div id="notes-body"></div>
+            <div id="notes-content"></div>
         </div>
-        <div id="notes-editor"></div>
+        <div id="notes-editor">
+            <button id="editor-toggle-btn" type="button"></button>
+            <form id="note-form">
+                <textarea id="editor-text-area"></textarea>
+                <button type="submit" form="note-form">Save</button>
+            </form>
+        </div>
     </div>
 
     <!-- new page modal -->

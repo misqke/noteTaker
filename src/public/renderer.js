@@ -12,6 +12,9 @@
     const deletePageModal = document.getElementById("delete-page-modal");
     const notesBody = document.getElementById("notes-body");
     const pageTitle = document.getElementById("page-title");
+    const notesContainer = document.getElementById("notes-container");
+    const notesContent = document.getElementById("notes-content");
+    const editorToggleBtn = document.getElementById("editor-toggle-btn");
 
     /** END PAGE ELEMENTS */
 
@@ -21,6 +24,7 @@
 
     let pages =  notesManager.getPages();
     let currentPage = null;
+    let currentNotes = [];
 
     /** END STATE */
 
@@ -28,10 +32,31 @@
 
     /** START FUNCTIONS */
 
+    const handleToggleEditor = () => {
+      notesContainer.classList.toggle("open");
+    }
+
+    const createNote = (note) => {
+      const div = document.createElement("div");
+      div.classList.add("single-note");
+      div.innerHTML = note.Text;
+      notesContent.append(div);
+    }
+
     const setPage = (page) => {
       pageTitle.innerText = page.Title;
       currentPage = page;
       deletePageModalBtn.disabled = false;
+      const response = notesManager.getPageNotes(page.PageId);
+      notesContent.innerHTML = "";
+      if (response.success) {
+        currentNotes = response.data;
+        response.data.forEach(note => {
+          createNote(note);
+        })
+      } else {
+        notesContent.innerHTML = response.error;
+      }
     }
 
     const clearNotesBody = () => {
@@ -127,5 +152,11 @@
     /** END MENU BUTTONs */
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /** START EDITOR */
+
+    editorToggleBtn.onclick = handleToggleEditor;
+
+    /** END EDITOR */
     /////////////////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////
