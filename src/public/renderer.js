@@ -1,3 +1,4 @@
+
     /** START PAGE ELEMENTS */
 
     const pagesNav = document.querySelector("#pages-nav ul");
@@ -15,6 +16,8 @@
     const notesContainer = document.getElementById("notes-container");
     const notesContent = document.getElementById("notes-content");
     const editorToggleBtn = document.getElementById("editor-toggle-btn");
+    const newNoteForm = document.getElementById("note-form");
+    const newNoteInput = document.getElementById("editor-text-area");
 
     /** END PAGE ELEMENTS */
 
@@ -39,7 +42,13 @@
     const createNote = (note) => {
       const div = document.createElement("div");
       div.classList.add("single-note");
-      div.innerHTML = note.Text;
+      const md = notesManager.convert(note.Text);
+      const editBtn = document.createElement("button");
+      editBtn.classList.add("edit-note-button");
+      editBtn.innerText = "E";
+      console.log(md);
+      div.innerHTML = md;
+      div.append(editBtn);
       notesContent.append(div);
     }
 
@@ -109,6 +118,21 @@
         }
       }
 
+      const handleNewNote = (text) => {
+        const response = notesManager.addNote(currentPage.PageId, text);
+        if (response.success) {
+          const note = response.data;
+          currentNotes.push(note);
+          createNote(note);
+          return true;
+        } else {
+          alert(response.error);
+          return false;
+        }
+      }
+
+      
+
     /** END FUNCTIONS */
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -156,6 +180,12 @@
     /** START EDITOR */
 
     editorToggleBtn.onclick = handleToggleEditor;
+
+    newNoteForm.onsubmit = (e) => {
+      e.preventDefault();
+      const success = handleNewNote(newNoteInput.value);
+      if (success) newNoteForm.reset();
+    }
 
     /** END EDITOR */
     /////////////////////////////////////////////////////////////////////////////////////////////////

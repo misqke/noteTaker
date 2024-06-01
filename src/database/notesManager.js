@@ -79,10 +79,39 @@ const getPageNotes = (pageId) => {
     }
 }
 
+const insertNote = (pageId, text) => {
+    try {
+        const insertQuery = db.prepare("INSERT INTO Notes(PageId, Text) VALUES(?, ?)");
+        const info = insertQuery.run(pageId, text);
+
+        if (info.changes == 1) {
+            const note = getNote(info.lastInsertRowid);
+            return {success: true, data: note};
+        } else {
+            return {success: false, error: "Failed to add new note..."};
+        }
+
+    } catch (err) {
+        console.log(err);
+        return {success: false, error: err};
+    }
+}
+
+const getNote = (noteId) => {
+    try {
+        const getQuery = db.prepare("SELECT * FROM Notes WHERE NoteId = ?");
+        const note = getQuery.get(noteId);
+        return note;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 module.exports = {
     insertPage,
     deletePage,
     updatePage,
     getAllPAges,
-    getPageNotes
+    getPageNotes,
+    insertNote
 }

@@ -15,6 +15,7 @@ html {
     --body: #fff;
     --sidebar: #e0eaef;
     --text: #101010;
+    --shadow: #10101044;
     font-size: 16px;
 }
 
@@ -23,6 +24,7 @@ html.dark {
     --body: #323232;
     --sidebar: #222222;;
     --text: #fefefe;
+    --shadow: #fefefe44;
 }
 
 body {
@@ -110,10 +112,55 @@ list-style: none;
 #page-title {
     font-size: 2rem;
     margin-bottom: 1rem;
+    color: var(--primary);
 }
 
 #notes-content {
-    
+    display: flex;
+    flex-direction: column;
+    padding: .5rem;
+    gap: .5rem;
+    ul, ol {
+        margin-left: 1rem;
+    }
+}
+
+.single-note{
+    padding: .5rem 1.5rem .5rem .5rem;
+    position: relative;
+    h1 {
+        font-size: 1.75rem;
+    }
+    h2 {
+        font-size: 1.5rem;
+    }
+    h3 {
+        font-size: 1.25rem;
+    }
+}
+
+.single-note * {
+    margin-bottom: .25rem;
+}
+
+.single-note:hover{
+    box-shadow: 0px 0px 5px 2px var(--shadow);
+}
+
+.edit-note-button{
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    opacity: 0;
+}
+
+.single-note:hover .edit-note-button {
+    opacity: .5;
+}
+
+.single-note:hover .edit-note-button:hover {
+    opacity: 1;
 }
 
 #notes-editor {
@@ -145,6 +192,7 @@ list-style: none;
     padding: 1rem;
     background: var(--primary);
     border: none;
+    position: relative;
 }
 
 /* END NOTES CONTAINER */
